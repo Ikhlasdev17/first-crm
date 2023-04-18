@@ -7,6 +7,6 @@ const router = express.Router()
 
 router
 	.get('/', authRequired, UserController.getAll)
-	.post('/', authRequired, validator(UserSchema), UserController.createUser)
+	.post('/', validator(UserSchema), UserController.createUser)
 	.patch('/:id', UserController.updateUser)
 export default router

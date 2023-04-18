@@ -25,53 +25,65 @@ export const UserController = {
 		})
 	},
 	async createUser(req: Request, res: Response) {
-		const { username, phone, linkId, status } = req.body
+		const { username, phone, linkId, status, unical_id } = req.body
 
 		try {
 			const currentLink = await Link.findOneBy({ id: linkId })
-			console.log(currentLink)
-			if (currentLink) {
-				const newUser = new User()
-				newUser.phone = phone
-				newUser.username = username
-				newUser.link = currentLink
-				newUser.status = status
+			const user = await User.findOneBy({ unical_id })
 
-				const savedUser = await newUser.save()
-
-				currentLink.price_for_single = Math.floor(
-					currentLink.price / (currentLink.clicked + 1)
-				)
-				currentLink.clicked = currentLink.clicked + 1
-				await currentLink.save()
-
-				res.status(201).json({
-					message: 'success',
-					payload: savedUser,
+			if (user) {
+				res.status(422).json({
+					message: 'user already exist!',
 				})
 			} else {
-				res.status(422).json({
-					message: 'Link is not defined!',
-				})
+				if (currentLink) {
+					const newUser = new User()
+					newUser.phone = phone
+					newUser.username = username
+					newUser.link = currentLink
+					newUser.status = status
+					newUser.unical_id = unical_id
+
+					const savedUser = await newUser.save()
+
+					currentLink.price_for_single = Math.floor(
+						currentLink.price / (currentLink.clicked + 1)
+					)
+					currentLink.clicked = currentLink.clicked + 1
+					await currentLink.save()
+
+					res.status(201).json({
+						message: 'success',
+						payload: savedUser,
+					})
+				} else {
+					res.status(422).json({
+						message: 'Link is not defined!',
+					})
+				}
 			}
 		} catch (error) {
 			res.status(422).json({
-				message: error,
+				message: error.message,
 			})
+			console.log(error)
 		}
 	},
 
 	async updateUser(req: Request, res: Response) {
 		try {
 			const { id } = req.params
-			const { phone, username, status } = req.body
+			const { phone, username, status, unical_id } = req.body
 			if (!id) {
 				res.status(422).json({
 					message: 'id is required',
 				})
 			}
 
-			const currentUser = await User.findOneBy({ id: Number(id) })
+			const currentUser = await User.findOneBy({ unical_id: id })
+
+			console.log(currentUser)
+			console.log(id)
 
 			if (!currentUser) {
 				res.status(404).json({
@@ -81,6 +93,7 @@ export const UserController = {
 				currentUser.phone = phone || currentUser?.phone
 				currentUser.username = username || currentUser?.username
 				currentUser.status = status || currentUser?.status
+				currentUser.unical_id = unical_id || currentUser?.unical_id
 				await currentUser.save()
 				res.status(200).json({
 					message: 'success',

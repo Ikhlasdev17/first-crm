@@ -29,6 +29,11 @@ export class User extends BaseEntity {
 	username: string
 
 	@Column({
+		unique: true,
+	})
+	unical_id: string
+
+	@Column({
 		nullable: true,
 	})
 	phone: string

@@ -11,5 +11,8 @@ export const UserSchema = object({
 		linkId: string({
 			required_error: 'link is required!',
 		}),
+		unical_id: string({
+			required_error: 'unical_id is required!',
+		}),
 	}),
 })

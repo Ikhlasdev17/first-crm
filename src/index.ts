@@ -5,12 +5,13 @@ import { routes } from './routes'
 import { pagination } from 'typeorm-pagination'
 dotenv.config()
 const app = express()
-
+import cors from 'cors'
 const main = async () => {
 	await AppDataSource.initialize()
 		.then(async res => {
 			app.use(express.json())
 			app.use(pagination)
+			app.use(cors())
 			app.use('/api/employee', routes.employeeRoutes)
 			app.use('/api/link', routes.linkRoutes)
 			app.use('/api/users', routes.userRoutes)
