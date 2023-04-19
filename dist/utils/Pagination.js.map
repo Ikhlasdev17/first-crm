@@ -1,0 +1,1 @@
+{"version":3,"file":"Pagination.js","sourceRoot":"","sources":["../../src/utils/Pagination.ts"],"names":[],"mappings":";;;;;;;;;;;;AAMO,MAAM,UAAU,GAAG,CAAO,EAChC,IAAI,GAAG,CAAC,EACR,QAAQ,GAAG,EAAE,EACb,OAAO,GACE,EAAE,EAAE;IACb,OAAO,OAAO,CAAC,MAAM,CAAC,CAAC,IAAI,GAAG,CAAC,CAAC,GAAG,QAAQ,CAAC,CAAC,KAAK,CAAC,QAAQ,CAAC,CAAA;AAC7D,CAAC,CAAA,CAAA;AANY,QAAA,UAAU,cAMtB"}

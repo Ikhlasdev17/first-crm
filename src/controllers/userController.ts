@@ -82,9 +82,6 @@ export const UserController = {
 
 			const currentUser = await User.findOneBy({ unical_id: id })
 
-			console.log(currentUser)
-			console.log(id)
-
 			if (!currentUser) {
 				res.status(404).json({
 					message: 'user is not defined!',
